@@ -120,7 +120,7 @@ router.get("/search/:searchkey", async (req, res) => {
     }
 });
 
-// VIRKER IKKE
+
 // PUT METODE - Ret en gaardbutik - ud fra produktets ID
 
 router.put('/admin/:id', upload.single('image'), async (req, res) => {
@@ -133,17 +133,7 @@ router.put('/admin/:id', upload.single('image'), async (req, res) => {
 
         if (req.file) {
 
-            // erstat det gamle billede med det nye navn i requestet
-
             req.body.image = req.file.filename
-
-            // Hvis billedet/ filen også skal slettes - slet det INDEN req.body.image overskrives med det nye fra Multer -- SLET ET BILLEDE
-
-            const oldgaardbutik = await Gaardbutik.findById(req.params.id);
-            fs.unlink('public/images/' + oldgaardbutik.image, (err) => {
-                if (err) throw err;
-                console.log("image er slettet")
-            })
 
         }
 
@@ -151,7 +141,7 @@ router.put('/admin/:id', upload.single('image'), async (req, res) => {
 
         gaardbutik.save();
 
-        res.status(201).json({ message: 'Ny er oprettet', oprettet: gaardbutik })
+        res.status(201).json({ message: 'Butik er rettet', oprettet: gaardbutik })
 
     } catch (error) {
 
