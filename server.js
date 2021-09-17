@@ -70,13 +70,9 @@ app.use(session({
 }));
 
 
-
-
-
 // KOMMENTAR AUTH TJEK - tjek om bruger er "logget ind" (har godkendt cookie)
 // * betyder hvad som helst foran og hvad som helst bagved
 // fx. http://localhost/4011
-
 
 
 // *********
@@ -99,11 +95,6 @@ app.use('*/admin*', async (req, res, next) => {
     }
 
 })
-
-
-
-
-
 
 
 

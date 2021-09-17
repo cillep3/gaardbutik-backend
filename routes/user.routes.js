@@ -14,7 +14,6 @@ router.use(formData.parse());
 // POST METODE
 router.post("/", async (req, res) => {
     console.log("POST/opret ny user/bruger");
-    //return res.status(200).json({ message: "Hilsen fra about" });
 
     try {
         let user = new User(req.body); //req.body indeholder de data(titel, content) som skal oprettes
@@ -52,6 +51,48 @@ router.put('/:id', async (req, res) => {
     }
 
 })
+
+// **** Hente alle Brugere
+// GET METODE 
+
+router.get("/", async (req, res) => {
+
+    console.log("GET/hent alle brugere");
+
+
+    try {
+        let users = await User.find(); // find alle
+
+        return res.status(200).json(users);
+
+    } catch (error) {
+
+        console.log("FEJL:", error);
+        return res.status(500).json({ message: "Problemer med serveren" });
+    }
+});
+
+
+// ** DELETE - Slet en bruger med ID
+// --------------------------------
+
+router.delete("/:id", async (req, res) => {
+
+    console.log("SLET et udvalgt bruger ud fra ID", req.params.id);
+
+
+    try {
+
+        await User.findByIdAndDelete(req.params.id);
+
+        return res.status(200).json({ message: " Brugeren er slettet" });
+
+    } catch (error) {
+
+        console.log("FEJL:", error);
+        return res.status(500).json({ message: "Problemer med serveren" });
+    }
+});
 
 
 

@@ -4,9 +4,7 @@ const express = require("express");
 const router = express.Router();
 
 
-// MULTER 
-//til håndtering af filer (fx images) https://www.npmjs.com/package/multer
-// cb betyder call back - håndtering af destinationen
+// ** MULTER 
 const multer = require('multer');
 
 const upload = multer({
@@ -23,7 +21,7 @@ const upload = multer({
 
 })
 
-// POST METODE - opret et produkt
+// POST METODE - opret en gårdbutik
 router.post('/admin', upload.single('image'), async (req, res) => {
 
     console.log('POST - gaardbutikker');
@@ -32,7 +30,6 @@ router.post('/admin', upload.single('image'), async (req, res) => {
 
         let gaardbutik = new Gaardbutik(req.body);
         gaardbutik.image = req.file.filename
-        //produkt.image = req.file ? req.file.filename : 'paavej.jpg'
 
         gaardbutik = await gaardbutik.save();
 
@@ -53,7 +50,6 @@ router.post('/admin', upload.single('image'), async (req, res) => {
 router.get("/", async (req, res) => {
 
     console.log("GET/hent alle gaardbutikker");
-    //return res.status(200).json({ message: "Hilsen fra about" });
 
     try {
         let gaardbutikker = await Gaardbutik.find(); // find alle
@@ -73,14 +69,9 @@ router.get("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
 
     console.log("GET/hent et udvalgt butik ud fra ID", req.params.id);
-    //return res.status(200).json({ message: "Hilsen fra about" });
 
     try {
         let gaardbutik = await Gaardbutik.findById(req.params.id); // find med ID
-
-        /* if (produkt == null) {
-          return res.status(404).json({});
-        } */
 
         return res.status(200).json(gaardbutik);
 
@@ -152,17 +143,16 @@ router.put('/admin/:id', upload.single('image'), async (req, res) => {
 })
 
 
-// DELETE - Slette et produkt
+// DELETE - Slet en butik
 // --------------------------------
 
 router.delete("/admin/:id", async (req, res) => {
 
     console.log("SLET et udvalgt gaardbutik ud fra ID", req.params.id);
-    //return res.status(200).json({ message: "Hilsen fra about" });
 
     try {
 
-        await Gaardbutik.findByIdAndDelete(req.params.id); // slet udvalgt -snup id'en fra url'en
+        await Gaardbutik.findByIdAndDelete(req.params.id); // slet udvalgt - ud fr id
 
         return res.status(200).json({ message: " gaardbutikken er slettet" });
 
