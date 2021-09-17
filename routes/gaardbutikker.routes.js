@@ -121,7 +121,7 @@ router.get("/search/:searchkey", async (req, res) => {
 });
 
 
-// PUT METODE - Ret en gaardbutik - ud fra produktets ID
+// PUT METODE - Ret en gaardbutik - ud fra butikkens ID
 
 router.put('/admin/:id', upload.single('image'), async (req, res) => {
 
@@ -150,7 +150,6 @@ router.put('/admin/:id', upload.single('image'), async (req, res) => {
     }
 
 })
-
 
 
 // DELETE - Slette et produkt

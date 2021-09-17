@@ -11,7 +11,7 @@ router.use(formData.parse());
 
 // OPRET EN BRUGER
 
-// POST METODE OG DELETE giver ikke mening på en side OM oS  - der skal altid være 1 dokument som man skal rette i = PUT
+// POST METODE
 router.post("/", async (req, res) => {
     console.log("POST/opret ny user/bruger");
     //return res.status(200).json({ message: "Hilsen fra about" });
@@ -28,6 +28,32 @@ router.post("/", async (req, res) => {
         return res.status(500).json({ message: "Problemer med serveren" });
     }
 });
+
+
+// PUT METODE - RET EN BRUGER - ud fra brugerens id
+
+router.put('/:id', async (req, res) => {
+
+    console.log('PUT/ret - user');
+
+    try {
+
+
+        let user = await User.findByIdAndUpdate({ _id: req.params.id }, req.body, { new: true })
+
+        user.save();
+
+        res.status(201).json({ message: 'Brugeren er rettet', oprettet: user })
+
+    } catch (error) {
+
+        res.status(400).json({ message: ' Der er sket en fejl' })
+
+    }
+
+})
+
+
 
 // KOMMENTAR Husk at eksportere
 
